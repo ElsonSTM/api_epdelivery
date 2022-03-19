@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.apiepfood.epfood.entities.Product;
 
 public class ProductDto implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
