@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "td_user")
 public class User implements Serializable{ //Serializable: Transforma o objeto em cadeia de bytes, para trafegar na rede, comunicacao entre back/front
@@ -25,6 +27,7 @@ public class User implements Serializable{ //Serializable: Transforma o objeto e
 	private String phone;
 	private String password;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
@@ -103,6 +106,4 @@ public class User implements Serializable{ //Serializable: Transforma o objeto e
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
 }

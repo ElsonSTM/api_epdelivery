@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
@@ -27,7 +29,9 @@ public class Order implements Serializable {
 	private Long id;
 	private String address;
 	private Double latitude;
-	private String longitude;
+	private Double longitude;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	private OrderStatus status;
 	
@@ -46,7 +50,7 @@ public class Order implements Serializable {
 		
 	}
 
-	public Order(Long id, String address, Double latitude, String longitude, Instant moment, OrderStatus status, User client) {
+	public Order(Long id, String address, Double latitude, Double longitude, Instant moment, OrderStatus status, User client) {
 		super();
 		this.id = id;
 		this.address = address;
@@ -81,11 +85,11 @@ public class Order implements Serializable {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
