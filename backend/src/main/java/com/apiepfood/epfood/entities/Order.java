@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,11 +38,15 @@ public class Order implements Serializable {
 	
 	private Set<Product> products = new HashSet<>(); //Set -> não aceita repetição
 	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private User client;
+	
 	public Order() {
 		
 	}
 
-	public Order(Long id, String address, Double latitude, String longitude, Instant moment, OrderStatus status) {
+	public Order(Long id, String address, Double latitude, String longitude, Instant moment, OrderStatus status, User client) {
 		super();
 		this.id = id;
 		this.address = address;
@@ -49,6 +54,7 @@ public class Order implements Serializable {
 		this.longitude = longitude;
 		this.moment = moment;
 		this.status = status;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -89,6 +95,14 @@ public class Order implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+	
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 	public OrderStatus getStatus() {
