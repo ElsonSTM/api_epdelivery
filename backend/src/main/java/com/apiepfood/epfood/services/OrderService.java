@@ -31,6 +31,12 @@ public class OrderService {
 		return list.stream().map(x -> new OrderDto(x)).collect(Collectors.toList());	
 	}
 	
+	@Transactional(readOnly = true) //Garantir que a transação vai abrir e fechar conexão com o banco. ReadOnly não vai fazer o block de escrita no banco.
+	public List<OrderDto> findDelivery()  {
+		List<Order> list = repository.findOrdersDelivery(); //Chamada da query (busca) personalizada criado na classe OrderRepository
+		return list.stream().map(x -> new OrderDto(x)).collect(Collectors.toList());	
+	}
+	
 	@Transactional
 	public OrderDto insert(OrderDto dto) { //OrderDTO vai ser o retorno ; OrderDTO dto vai ser o objeto a ser salvo no banco de dados
 		Order order = new Order(null, dto.getAddress(), dto.getLatitude(), dto.getLongitude(), 
@@ -41,5 +47,13 @@ public class OrderService {
 		}
 		order = repository.save(order); //guarda uma referencia para o objeto salvo.
 		return new OrderDto(order); //retornar o objeto order convertido para dto.
+	}
+	
+	@Transactional
+	public OrderDto setDelivered(Long id) {
+		Order  order = repository.getOne(id);
+		order.setStatus(OrderStatus.ENTREGUE);
+		order = repository.save(order);
+		return new OrderDto(order);
 	}
 }
