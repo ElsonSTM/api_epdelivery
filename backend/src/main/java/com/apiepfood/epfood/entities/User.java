@@ -1,17 +1,14 @@
 package com.apiepfood.epfood.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@Entity
 public class User implements Serializable{ //Serializable: Transforma o objeto em cadeia de bytes, para trafegar na rede, comunicacao entre back/front
 	private static final long serialVersionUID = 1L;
 	
@@ -23,9 +20,6 @@ public class User implements Serializable{ //Serializable: Transforma o objeto e
 	private String phone;
 	private String password;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "client")
-	private List<Order> orders = new ArrayList<>();
 	
 	public User() {	//Construtor vazio (Obrigatório)
 	}
@@ -80,9 +74,6 @@ public class User implements Serializable{ //Serializable: Transforma o objeto e
 		this.password = password;
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
-	}
 
 	@Override
 	public int hashCode() {
